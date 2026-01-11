@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UTI Pediátrica – VM Invasiva (Painel de Configuração Inicial)</title>
+  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=2ILm_dZpPWWV2EJ-nsSIUY2pea8iVA_xjd-FtxzoZ7EwAVzp9mo6zx_deQknOV0kAoml2szGnZi3tIW-Bc1JugEAth4KF6D-X8mIdpK97qvH_7HAKpINeMI0g_8lPwZBn5J8Ns0j05T0CnAb3un6z7G854-Rjyz3uBFPymclBkSJySwfJpshp4Gd9V65Wy1YwHmNV7P3PFYSsSHuN_t0fidVHgtO2KqhJ7uBu9ugZWA7L5-GVEz1HiYyhrKuPS1q" charset="UTF-8"></script><style>
+    :root{
+      --azul-bebe:#e3f2fd;
+      --azul-marinho:#0d47a1;
+      --verde-escuro:#1b5e20;
+      --amarelo:#d97706;
+      --vermelho:#dc2626;
+      --cinza-claro:#f5f5f5;
+      --cinza-borda:#d0d0d0;
+      --texto:#1f2933;
+      --texto-2:#4b5563;
+      --card:#ffffff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; padding:16px; min-height:100vh;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--texto);
+      display:flex; justify-content:center; align-items:flex-start;
+      background:linear-gradient(135deg,var(--azul-bebe),#ffffff);
+    }
+    .container{
+      width:100%; max-width:860px;
+      background:var(--card);
+      border-radius:16px;
+      box-shadow:0 10px 30px rgba(15,23,42,.15);
+      padding:28px 24px 24px;
+      margin-bottom:24px;
+    }
+    .header{border-bottom:2px solid var(--azul-bebe); padding-bottom:14px; margin-bottom:18px}
+    .title{margin:0 0 6px 0; font-size:1.55rem; font-weight:850; color:var(--azul-marinho)}
+    .subtitle{margin:0; font-size:.88rem; color:var(--texto-2); line-height:1.35}
+    .modulo{
+      margin-top:18px;
+      padding:14px;
+      background:#fafbfc;
+      border-radius:12px;
+      border-left:4px solid var(--azul-marinho);
+    }
+    .modulo-titulo{
+      margin:0 0 12px 0;
+      font-size:1.05rem;
+      font-weight:850;
+      color:var(--azul-marinho);
+      display:flex; align-items:center; gap:8px;
+    }
+    .modulo-titulo::before{content:"▸"; font-size:1.35rem}
+    .inline-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(210px,1fr));
+      gap:12px;
+    }
+    .field-group{margin-bottom:12px}
+    .field-group:last-child{margin-bottom:0}
+    label{
+      display:block;
+      font-size:.9rem;
+      font-weight:700;
+      margin-bottom:5px;
+    }
+    .hint{
+      font-size:.75rem;
+      color:var(--texto-2);
+      margin-top:4px;
+      font-style:italic;
+      line-height:1.25;
+    }
+    input[type="number"], select{
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      border:1.5px solid var(--cinza-borda);
+      font-size:.95rem;
+      font-family:inherit;
+      background:#fff;
+    }
+    input[type="number"]:focus, select:focus{
+      outline:none;
+      border-color:var(--azul-marinho);
+      box-shadow:0 0 0 3px rgba(13,71,161,.10);
+    }
+    .btn-row{
+      display:flex; gap:10px; margin-top:16px; justify-content:center;
+    }
+    .btn{
+      flex:1; max-width:260px;
+      padding:12px 16px;
+      border-radius:999px;
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+      font-size:.95rem;
+      transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+    .btn-primary{
+      background:var(--azul-marinho);
+      color:#fff;
+      box-shadow:0 4px 12px rgba(13,71,161,.30);
+    }
+    .btn-primary:hover{transform:translateY(-1px); box-shadow:0 6px 16px rgba(13,71,161,.40)}
+    .btn-secondary{
+      background:#f3f4f6;
+      color:var(--azul-marinho);
+      border:1.5px solid var(--cinza-borda);
+    }
+    .btn-secondary:hover{background:var(--azul-bebe)}
+    .resultado{
+      margin-top:16px;
+      padding:14px;
+      border-radius:12px;
+      display:none;
+      animation:fadeIn .18s ease;
+    }
+    @keyframes fadeIn{from{opacity:0; transform:translateY(-6px)}to{opacity:1; transform:translateY(0)}}
+    .resultado.ok{background:#ecfdf5; border-left:4px solid var(--verde-escuro)}
+    .resultado.warn{background:#fffbeb; border-left:4px solid var(--amarelo)}
+    .resultado.danger{background:#fef2f2; border-left:4px solid var(--vermelho)}
+    .resultado-titulo{
+      font-weight:900;
+      font-size:1.02rem;
+      margin-bottom:8px;
+      display:flex; gap:8px; align-items:center;
+    }
+    .resultado.ok .resultado-titulo{color:var(--verde-escuro)}
+    .resultado.warn .resultado-titulo{color:var(--amarelo)}
+    .resultado.danger .resultado-titulo{color:var(--vermelho)}
+    .resultado-conteudo{font-size:.92rem; line-height:1.55}
+    .metrica{
+      display:flex; justify-content:space-between; align-items:center;
+      gap:10px;
+      margin:8px 0; padding:8px 0;
+      border-bottom:1px dashed rgba(0,0,0,.08);
+    }
+    .metrica:last-child{border-bottom:none}
+    .metrica-nome{font-weight:700}
+    .metrica-valor{
+      font-weight:900;
+      padding:4px 8px;
+      border-radius:6px;
+      background:rgba(255,255,255,.65);
+      white-space:nowrap;
+      text-align:right;
+    }
+    .badge{
+      display:inline-block;
+      padding:2px 8px;
+      border-radius:999px;
+      font-size:.78rem;
+      font-weight:800;
+      border:1px solid rgba(0,0,0,.08);
+      background:#fff;
+      margin-left:6px;
+    }
+    .note{
+      background:#fef3c7;
+      border-left:4px solid var(--amarelo);
+      padding:10px 12px;
+      border-radius:10px;
+      font-size:.83rem;
+      color:#92400e;
+      line-height:1.35;
+      margin-top:10px;
+    }
+    details{
+      margin-top:14px;
+      font-size:.86rem;
+      background:#f9fafb;
+      border-radius:10px;
+      padding:10px 12px;
+      border:1px solid var(--cinza-borda);
+    }
+    summary{
+      cursor:pointer;
+      font-weight:800;
+      color:var(--azul-marinho);
+      list-style:none;
+      user-select:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    summary::before{content:"▸ "; display:inline-block; margin-right:4px}
+    details[open] summary::before{content:"▾ "}
+    .detalhes-conteudo{
+      margin-top:10px; padding-top:10px;
+      border-top:1px solid var(--cinza-borda);
+      color:var(--texto-2);
+      line-height:1.45;
+    }
+    .footer{
+      margin-top:18px; padding-top:14px;
+      border-top:1px solid var(--cinza-borda);
+      text-align:center;
+      font-size:.75rem;
+      color:var(--texto-2);
+      opacity:.7;
+    }
+    @media (max-width:600px){
+      .container{padding:20px 16px 16px; border-radius:12px}
+      .title{font-size:1.35rem}
+      .btn-row{flex-direction:column}
+      .btn{max-width:100%}
+      .inline-grid{grid-template-columns:1fr}
+    }
+    @media print{
+      body{background:#fff; padding:0}
+      .container{box-shadow:none; border-radius:0; max-width:100%}
+      .btn-row, details{display:none !important}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="title">VM Invasiva em Pediatria — Painel de Configuração Inicial</h1>
+      <p class="subtitle">
+        Gera sugestão inicial (modo/VT/FR/Ti/PEEP/FiO₂), interpreta gasometria por faixa etária e faz checagens de segurança (ΔP, Pplat, IO/OSI).
+        Ferramenta de apoio — não substitui a avaliação clínica e decisão do profissional.
+      </p>
+    </header>
+
+    <main>
+      <form id="formVM">
+        <div class="modulo">
+          <h2 class="modulo-titulo">1) Paciente</h2>
+
+          <div class="inline-grid">
+            <div class="field-group">
+              <label>Faixa etária (para referências)</label>
+              <select id="faixa">
+                <option value="d0_1">0–1 dia</option>
+                <option value="d2_4">2–4 dias</option>
+                <option value="d5_23m">5 dias – 23 meses</option>
+                <option value="m24_12a" selected>24 meses – 12 anos</option>
+                <option value="a13plus">≥ 13 anos</option>
+              </select>
+              <div class="hint">As faixas ajustam referências de pH/PaCO₂/PaO₂/HCO₃⁻ e também sugestões de FR/Ti iniciais.</div>
+            </div>
+
+            <div class="field-group">
+              <label>Peso atual (kg)</label>
+              <input id="peso" type="number" min="0" step="0.1" placeholder="ex.: 16.5" />
+              <div class="hint">Usado para VT (mL) e para checar coerência do volume sugerido.</div>
+            </div>
+
+            <div class="field-group">
+              <label>Estratégia clínica</label>
+              <select id="estrategia">
+                <option value="normal" selected>Pulmão “normal” / pós-op / sedação</option>
+                <option value="pards">PARDS / hipoxemia (proteção pulmonar)</option>
+                <option value="obstrutivo">Obstrutivo (asma/broncoespasmo, auto-PEEP)</option>
+                <option value="neuro">Neuro (meta de normocapnia, evitar hipoxemia)</option>
+              </select>
+              <div class="hint">A ferramenta muda as “prioridades”: proteção/oxigenação vs tempo expiratório vs CO₂.</div>
+            </div>
+          </div>
+
+          <div class="note">
+            <strong>Como usar com segurança:</strong> use a saída como ponto de partida e ajuste em 10–15 min com curva/loop, mecânica (Cstat/Cdyn), auto-PEEP,
+            hemodinâmica e metas (SpO₂/PaCO₂/pH).
+          </div>
+        </div>
+
+        <div class="modulo">
+          <h2 class="modulo-titulo">2) Ventilador e Oxigenação</h2>
+
+          <div class="inline-grid">
+            <div class="field-group">
+              <label>FiO₂ (0–1)</label>
+              <input id="fio2" type="number" min="0.21" max="1" step="0.01" placeholder="ex.: 0.60" />
+              <div class="hint"> Inserir valor de FiO₂ em fração para calculo correto. EX: 0.4  /  0.35</div>
+            </div>
+
+            <div class="field-group">
+              <label>MAP (cmH₂O) <span class="badge">opcional</span></label>
+              <input id="map" type="number" min="0" step="0.1" placeholder="ex.: 12" />
+              <div class="hint">Para calcular Índice de Oxigenação (IO) ou índice de oxigenação usando saturação (OSI).</div>
+            </div>
+
+            <div class="field-group">
+              <label>SpO₂ (%) <span class="badge">opcional</span></label>
+              <input id="spo2" type="number" min="0" max="100" step="1" placeholder="ex.: 92" />
+              <div class="hint">Se PaO₂ não estiver disponível, usamos OSI.</div>
+            </div>
+          </div>
+
+          <div class="inline-grid">
+            <div class="field-group">
+              <label>PEEP (cmH₂O) <span class="badge">opcional</span></label>
+              <input id="peep" type="number" min="0" step="0.5" placeholder="ex.: 6" />
+              <div class="hint">Se informado junto de Pplat, calcula driving pressure = Pplat − PEEP.</div>
+            </div>
+
+            <div class="field-group">
+              <label>Pplat (cmH₂O) <span class="badge">opcional</span></label>
+              <input id="pplat" type="number" min="0" step="0.5" placeholder="ex.: 26" />
+              <div class="hint">Checagem de segurança (limites de proteção).</div>
+            </div>
+
+            <div class="field-group">
+              <label>Auto-PEEP/PEEPi (cmH₂O) <span class="badge">opcional</span></label>
+              <input id="peepi" type="number" min="0" step="0.5" placeholder="ex.: 8" />
+              <div class="hint">Útil no obstrutivo: sugere foco em tempo expiratório e aprisionamento aéreo.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modulo">
+          <h2 class="modulo-titulo">3) Gasometria (arterial) — interpretação por idade</h2>
+
+          <div class="inline-grid">
+            <div class="field-group">
+              <label>pH</label>
+              <input id="ph" type="number" step="0.01" placeholder="ex.: 7.28" />
+            </div>
+
+            <div class="field-group">
+              <label>PaCO₂ (mmHg)</label>
+              <input id="paco2" type="number" step="1" placeholder="ex.: 55" />
+            </div>
+
+            <div class="field-group">
+              <label>PaO₂ (mmHg) <span class="badge">opcional</span></label>
+              <input id="pao2" type="number" step="1" placeholder="ex.: 62" />
+            </div>
+          </div>
+
+          <div class="inline-grid">
+            <div class="field-group">
+              <label>HCO₃⁻ (mmol/L) <span class="badge">opcional</span></label>
+              <input id="hco3" type="number" step="0.1" placeholder="ex.: 22.0" />
+            </div>
+
+            <div class="field-group">
+              <label>Base Excess (mmol/L) <span class="badge">opcional</span></label>
+              <input id="be" type="number" step="0.1" placeholder="ex.: -5.0" />
+            </div>
+
+            <div class="field-group">
+              <label>EtCO₂ (mmHg) <span class="badge">opcional</span></label>
+              <input id="etco2" type="number" step="1" placeholder="ex.: 48" />
+              <div class="hint">Só como contexto; a interpretação principal usa PaCO₂.</div>
+            </div>
+          </div>
+
+          <div class="note">
+            <strong>Importante:</strong> em recém-nascidos e lactentes, algumas referências de PaCO₂/HCO₃⁻ diferem do adulto.
+            Esta ferramenta usa faixas laboratoriais pediátricas para evitar “erro de adulto em criança”.
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-primary" id="btnGerar">Gerar Plano Inicial</button>
+          <button type="button" class="btn btn-secondary" id="btnLimpar">Limpar</button>
+          <button type="button" class="btn btn-secondary" id="btnCopiar">Copiar resumo</button>
+        </div>
+      </form>
+
+      <div id="resultado" class="resultado"></div>
+
+      <details>
+        <summary>Regras usadas (resumo técnico)</summary>
+        <div class="detalhes-conteudo">
+          <strong>Proteção em PARDS (núcleo):</strong> evitar VT alto (&gt;8 mL/kg) e priorizar VT menor quando necessário para manter pressões seguras; checar Pplat e ΔP. <br/>
+          <strong>Checagens:</strong> ΔP = Pplat − PEEP; IO = (FiO₂ × MAP × 100) / PaO₂; OSI = (FiO₂ × MAP × 100) / SpO₂. <br/>
+          <strong>Obstrutivo/asma:</strong> prioridade em tempo expiratório, sedação adequada e broncodilatadores, evitar aprisionamento (auto-PEEP) e “perseguir CO₂”, porém, nem sempre deve ser corrigido agressivamente. <br/>
+          <strong>Gasometria:</strong> normalidade por idade baseada em referência laboratorial pediátrica (pH/PaCO₂/PaO₂/HCO₃⁻).
+        </div>
+      </details>
+    </main>
+
+    <footer class="footer">
+      Desenvolvido por: Gabriela Canguçu | Coordenação de Fisioterapia | UTI Pediátrica
+    </footer>
+  </div>
+
+  <script>
+    // =========================
+    // Referências de gasometria por faixa etária (mmHg / mmol/L)
+    // Fonte (faixas laboratoriais): Beaumont Laboratory (atualizado 24/03/2016).
+    // =========================
+    const ABG_REF = {
+      d0_1: {
+        label: "0–1 dia",
+        ph:   [7.27, 7.47],          // 0–4 dias
+        paco2:[27, 40],              // 0–5 dias
+        pao2: [54, 95],              // 0–1 dia
+        hco3: [16, 23]               // 0–4 dias
+      },
+      d2_4: {
+        label: "2–4 dias",
+        ph:   [7.27, 7.47],
+        paco2:[27, 40],
+        pao2: [80, 100],             // 2 dias – adulto
+        hco3: [16, 23]
+      },
+      d5_23m: {
+        label: "5 dias – 23 meses",
+        ph:   [7.35, 7.45],          // 5 dias – adulto
+        paco2:[27, 41],              // 6 dias – 23 meses
+        pao2: [80, 100],             // 2 dias – adulto
+        hco3: [19, 27]               // 5 dias – 12 anos
+      },
+      m24_12a: {
+        label: "24 meses – 12 anos",
+        ph:   [7.35, 7.45],
+        paco2:[35, 45],              // 24 meses – adulto
+        pao2: [80, 100],
+        hco3: [19, 27]
+      },
+      a13plus: {
+        label: "≥ 13 anos",
+        ph:   [7.35, 7.45],
+        paco2:[35, 45],
+        pao2: [80, 100],
+        hco3: [23, 29]               // 13 anos – adulto
+      }
+    };
+
+    // =========================
+    // Sugestões iniciais (FR e Ti) por faixa etária: valores práticos de partida (não substituem protocolo).
+    // =========================
+    const START_DEFAULTS = {
+      d0_1:   { rr:[30,50], ti:[0.35,0.45] },
+      d2_4:   { rr:[30,50], ti:[0.35,0.45] },
+      d5_23m: { rr:[25,40], ti:[0.40,0.65] },
+      m24_12a:{ rr:[16,30], ti:[0.60,0.90] },
+      a13plus:{ rr:[12,20], ti:[0.80,1.00] }
+    };
+
+    // =========================
+    // Utilitários
+    // =========================
+    const $ = (id) => document.getElementById(id);
+
+    function num(id){
+      const v = parseFloat($(id).value);
+      return Number.isFinite(v) ? v : null;
+    }
+
+    function clamp(v, lo, hi){
+      if(!Number.isFinite(v)) return v;
+      return Math.min(Math.max(v, lo), hi);
+    }
+
+    function fmt(v, d=1){
+      if(v === null || v === undefined || !Number.isFinite(v)) return "—";
+      return v.toFixed(d);
+    }
+
+    function inRange(v, r){
+      if(!Number.isFinite(v)) return null;
+      return v >= r[0] && v <= r[1];
+    }
+
+    function classify(v, r){
+      if(!Number.isFinite(v)) return "—";
+      if(v < r[0]) return "baixo";
+      if(v > r[1]) return "alto";
+      return "normal";
+    }
+
+    function calcOI(fio2, map, pao2){
+      if(!Number.isFinite(fio2) || !Number.isFinite(map) || !Number.isFinite(pao2) || pao2 <= 0) return null;
+      return (fio2 * map * 100) / pao2;
+    }
+
+    function calcOSI(fio2, map, spo2){
+      if(!Number.isFinite(fio2) || !Number.isFinite(map) || !Number.isFinite(spo2) || spo2 <= 0) return null;
+      return (fio2 * map * 100) / spo2;
+    }
+
+    function calcDP(pplat, peep){
+      if(!Number.isFinite(pplat) || !Number.isFinite(peep)) return null;
+      return pplat - peep;
+    }
+
+    function pickVTmlKg(strategy, severityTag){
+      // Estrutura simples e “segura” (tendendo ao protetor).
+      if(strategy === "pards"){
+        if(severityTag === "moderado" || severityTag === "grave") return [4, 6];
+        return [5, 8];
+      }
+      if(strategy === "obstrutivo") return [6, 8];
+      return [6, 8];
+    }
+
+    function estimateSeverity(oi, osi){
+      const x = Number.isFinite(oi) ? oi : (Number.isFinite(osi) ? osi : null);
+      if(!Number.isFinite(x)) return { tag:"indefinido", val:null };
+      if(x >= 16) return { tag:"grave", val:x };
+      if(x >= 8)  return { tag:"moderado", val:x };
+      if(x >= 4)  return { tag:"leve", val:x };
+      return { tag:"fora_criterio", val:x };
+    }
+
+    function suggestRRandTi(faixa, strategy){
+      const base = START_DEFAULTS[faixa] || { rr:[16,30], ti:[0.6,0.9] };
+      let rr = [...base.rr];
+      let ti = [...base.ti];
+      if(strategy === "pards"){
+        rr = [rr[0], rr[1]];
+      } else if(strategy === "obstrutivo"){
+        rr = [Math.max(6, Math.round(rr[0]*0.5)), Math.max(10, Math.round(rr[1]*0.6))];
+        ti = [Math.max(0.5, ti[0]), Math.min(1.0, ti[1])];
+      } else if(strategy === "neuro"){
+        rr = [rr[0], rr[1]];
+      }
+      return { rr, ti };
+    }
+
+    function computeCycle(rr, ti){
+      if(!Number.isFinite(rr) || rr <= 0 || !Number.isFinite(ti) || ti <= 0) return null;
+      const ttot = 60 / rr;
+      const te = ttot - ti;
+      if(te <= 0) return { ttot, te, ie:"inválido" };
+      const ie = `1:${(te/ti).toFixed(1)}`;
+      return { ttot, te, ie };
+    }
+
+    function interpretABG(faixa){
+      const ref = ABG_REF[faixa];
+      const ph = num("ph");
+      const paco2 = num("paco2");
+      const pao2 = num("pao2");
+      const hco3 = num("hco3");
+
+      const out = {
+        ref,
+        ph: { v:ph, s: classify(ph, ref.ph), ok: inRange(ph, ref.ph) },
+        paco2:{ v:paco2, s: classify(paco2, ref.paco2), ok: inRange(paco2, ref.paco2) },
+        pao2:{ v:pao2, s: classify(pao2, ref.pao2), ok: inRange(pao2, ref.pao2) },
+        hco3: hco3 !== null ? { v:hco3, s: classify(hco3, ref.hco3), ok: inRange(hco3, ref.hco3) } : null
+      };
+
+      let acidBase = "—";
+      if(Number.isFinite(ph) && Number.isFinite(paco2)){
+        const acidemia = ph < ref.ph[0];
+        const alkalemia = ph > ref.ph[1];
+        const co2high = paco2 > ref.paco2[1];
+        const co2low  = paco2 < ref.paco2[0];
+
+        if(acidemia && co2high) acidBase = "Acidose respiratória (provável)";
+        else if(acidemia && !co2high) acidBase = "Acidose metabólica ou mista (avaliar HCO₃⁻/BE/lactato)";
+        else if(alkalemia && co2low) acidBase = "Alcalose respiratória (provável)";
+        else if(alkalemia && !co2low) acidBase = "Alcalose metabólica ou mista (avaliar HCO₃⁻/BE)";
+        else if(!acidemia && !alkalemia && co2high) acidBase = "Hipercapnia com pH compensado (avaliar cronicidade/estratégia permissiva)";
+        else if(!acidemia && !alkalemia && co2low)  acidBase = "Hipocapnia com pH compensado";
+        else acidBase = "Sem distúrbio evidente pelos dados inseridos";
+      }
+
+      out.acidBase = acidBase;
+      return out;
+    }
+
+    function buildResult(){
+      const faixa = $("faixa").value;
+      const estrategia = $("estrategia").value;
+
+      const peso = num("peso");
+      const fio2 = num("fio2");
+      const map = num("map");
+      const spo2 = num("spo2");
+      const pao2 = num("pao2");
+      const peep = num("peep");
+      const pplat = num("pplat");
+      const peepi = num("peepi");
+
+      const oi  = calcOI(fio2, map, pao2);
+      const osi = calcOSI(fio2, map, spo2);
+      const sev = estimateSeverity(oi, osi);
+
+      const vtRange = pickVTmlKg(estrategia, sev.tag);
+      const vtMin = (Number.isFinite(peso) && peso > 0) ? vtRange[0] * peso : null;
+      const vtMax = (Number.isFinite(peso) && peso > 0) ? vtRange[1] * peso : null;
+
+      const rrti = suggestRRandTi(faixa, estrategia);
+
+      const rrStart = Math.round((rrti.rr[0] + rrti.rr[1]) / 2);
+      const tiStart = parseFloat(((rrti.ti[0] + rrti.ti[1]) / 2).toFixed(2));
+      const cycle = computeCycle(rrStart, tiStart);
+
+      const dp = calcDP(pplat, peep);
+
+      const abg = interpretABG(faixa);
+
+      const alerts = [];
+      let level = "ok";
+
+      // Proteção (PARDS)
+      if(Number.isFinite(pplat) && pplat > 28){
+        alerts.push("Pplat acima de 28 cmH₂O — reavaliar VT/PEEP/complacência e estratégia protetora.");
+        level = level === "danger" ? "danger" : "warn";
+      }
+      if(Number.isFinite(dp) && dp > 15){
+        alerts.push("ΔP (Pplat − PEEP) acima de 15 cmH₂O — risco de lesão associada à ventilação; considerar reduzir VT/ajustar PEEP.");
+        level = level === "danger" ? "danger" : "warn";
+      }
+
+      // Obstrutivo
+      if(estrategia === "obstrutivo" && Number.isFinite(peepi) && peepi >= 8){
+        alerts.push("Auto-PEEP/PEEPi elevado — prioridade: aumentar tempo expiratório (reduzir FR/Ti), checar aprisionamento e hemodinâmica.");
+        level = level === "danger" ? "danger" : "warn";
+      }
+
+      // pH muito crítico
+      if(Number.isFinite(abg.ph.v) && (abg.ph.v < 7.20 || abg.ph.v > 7.55)){
+        alerts.push("pH em faixa crítica — confirmar gasometria, perfusão/choque, ventilação e necessidade de intervenção imediata.");
+        level = "danger";
+      }
+
+      // Novo alerta: PaCO₂ alto + Ti muito curto
+      if(abg.paco2 && abg.paco2.s === "alto" && Number.isFinite(tiStart) && tiStart < 0.5){
+        alerts.push("PaCO₂ alto com T.ins curto (<0,50 s) — considere reduzir FR (aumentar T.ins) antes de ajustar VT.");
+        if(level !== "danger") level = "warn";
+      }
+
+      // Novo alerta: tempo expiratório insuficiente
+      if(cycle && Number.isFinite(cycle.te) && Number.isFinite(tiStart) && cycle.te <= 2 * tiStart){
+        alerts.push("Tempo expiratório insuficiente (T.exp ≤ 2 × T.ins) — risco de aprisionamento aéreo; aumentar T.exp (reduzir FR ou encurtar T.ins).");
+        if(level !== "danger") level = "warn";
+      }
+
+      const modeText = (()=>{
+        if(estrategia === "pards") return "Sugestão de modo: controlado/assistido (ex.: PC/SIMV + PS) ou alvo de volume com limitação de pressão, com foco em proteção.";
+        if(estrategia === "obstrutivo") return "Sugestão de modo: controlado/assistido com atenção ao fluxo e ao tempo expiratório (evitar aprisionamento/auto-PEEP).";
+        if(estrategia === "neuro") return "Sugestão de modo: assistido/controle com meta de normocapnia e oxigenação estável.";
+        return "Sugestão de modo: assistido/controle conforme sedação e sincronia (ponto de partida).";
+      })();
+
+      const peepText = (()=>{
+        if(estrategia === "pards"){
+          return "PEEP: iniciar tipicamente em 5–8 cmH₂O e titular por oxigenação/mecânica (conforme protocolo).";
+        }
+        if(estrategia === "obstrutivo"){
+          return "PEEP: usar com cautela (geralmente baixo/moderado) e guiar por auto-PEEP, sincronia e hemodinâmica.";
+        }
+        return "PEEP: ponto de partida frequente 5 cmH₂O, ajustar por oxigenação e mecânica.";
+      })();
+
+      const fio2Text = (()=>{
+        if(!Number.isFinite(fio2)) return "FiO₂: defina inicialmente para manter SpO₂/oxigenação-alvo e reduza assim que possível.";
+        const f = clamp(fio2, 0.21, 1.0);
+        return `FiO₂ atual informada: ${f.toFixed(2)} (ajustar para meta de oxigenação e reduzir quando possível).`;
+      })();
+
+      const sevText = (()=>{
+        if(sev.tag === "indefinido") return "IO/OSI: não calculado (faltam MAP + PaO₂ ou SpO₂).";
+        const which = Number.isFinite(oi) ? `IO=${oi.toFixed(1)}` : `OSI=${osi.toFixed(1)}`;
+        let label = sev.tag;
+        if(sev.tag === "fora_criterio") label = "abaixo do ponto de corte (se aplicável)";
+        return `Oxigenação (aprox.): ${which} → ${label}.`;
+      })();
+
+      const abgText = (()=>{
+        const r = abg.ref;
+        const parts = [];
+        parts.push(`Referências (${r.label}): pH ${r.ph[0]}–${r.ph[1]} | PaCO₂ ${r.paco2[0]}–${r.paco2[1]} mmHg | PaO₂ ${r.pao2[0]}–${r.pao2[1]} mmHg | HCO₃⁻ ${r.hco3[0]}–${r.hco3[1]} mmol/L.`);
+        const v = [];
+        if(Number.isFinite(abg.ph.v)) v.push(`pH ${abg.ph.v.toFixed(2)} (${abg.ph.s})`);
+        if(Number.isFinite(abg.paco2.v)) v.push(`PaCO₂ ${abg.paco2.v.toFixed(0)} (${abg.paco2.s})`);
+        if(Number.isFinite(abg.pao2.v)) v.push(`PaO₂ ${abg.pao2.v.toFixed(0)} (${abg.pao2.s})`);
+        if(abg.hco3 && Number.isFinite(abg.hco3.v)) v.push(`HCO₃⁻ ${abg.hco3.v.toFixed(1)} (${abg.hco3.s})`);
+        if(v.length) parts.push(`Valores inseridos: ${v.join(" | ")}.`);
+        parts.push(`Leitura ácido-base (heurística): ${abg.acidBase}.`);
+        return parts.join("<br/>");
+      })();
+
+      const ventPlan = [];
+      ventPlan.push(modeText);
+      ventPlan.push(`<strong>VT protetor sugerido:</strong> ${vtRange[0]}–${vtRange[1]} mL/kg` + (vtMin !== null ? ` → ${Math.round(vtMin)}–${Math.round(vtMax)} mL (peso ${peso} kg)` : " (informe o peso para converter em mL)."));
+      ventPlan.push(`<strong>FR sugerida:</strong> ${rrti.rr[0]}–${rrti.rr[1]} irpm (ponto de partida: ${rrStart} irpm).`);
+      // tempo inspiratório sugerido (T.ins)
+      ventPlan.push(`<strong>T.ins sugerido:</strong> ${rrti.ti[0].toFixed(2)}–${rrti.ti[1].toFixed(2)} s (ponto de partida: ${tiStart.toFixed(2)} s).`);
+      if(cycle){
+      // Exibe tempos com nomenclatura intuitiva (T.ins = tempo inspiratório, T.exp = tempo expiratório)
+      ventPlan.push(`<strong>Ciclo (aprox.):</strong> T.ins ${tiStart.toFixed(2)} s | T.exp ${cycle.te.toFixed(2)} s | I:E ~ ${cycle.ie}.`);
+      }
+      ventPlan.push(`<strong>${peepText}</strong>`);
+      ventPlan.push(fio2Text);
+
+      const metrics = [];
+      metrics.push({ n:"ΔP (Pplat−PEEP)", v: dp !== null ? `${dp.toFixed(1)} cmH₂O` : "—" });
+      metrics.push({ n:"Pplat informado", v: pplat !== null ? `${pplat.toFixed(1)} cmH₂O` : "—" });
+      metrics.push({ n:"PEEP informado", v: peep !== null ? `${peep.toFixed(1)} cmH₂O` : "—" });
+      metrics.push({ n:"Auto-PEEP (PEEPi)", v: peepi !== null ? `${peepi.toFixed(1)} cmH₂O` : "—" });
+      metrics.push({ n:"IO", v: oi !== null ? oi.toFixed(1) : "—" });
+      metrics.push({ n:"OSI", v: osi !== null ? osi.toFixed(1) : "—" });
+      metrics.push({ n:"Severidade (aprox.)", v: sevText });
+
+      let icon = "✓";
+      let title = "Plano inicial + checagens prontas";
+      if(level === "warn"){ icon = "⚠️"; title = "Atenção: revisar alertas antes de aplicar"; }
+      if(level === "danger"){ icon = "⛔"; title = "Crítico: priorize estabilização e reavaliação imediata"; }
+
+      let html = `<div class="resultado-titulo">${icon} ${title}</div>`;
+      html += `<div class="resultado-conteudo">`;
+
+      html += `<div style="margin-bottom:10px;"><strong>Estratégia:</strong> ${$("estrategia").selectedOptions[0].text} <span class="badge">${ABG_REF[faixa].label}</span></div>`;
+
+      html += `<div class="modulo" style="margin:10px 0 0 0; border-left-color:var(--azul-marinho); padding:12px;">
+                <div style="font-weight:900; color:var(--azul-marinho); margin-bottom:8px;">Sugestão inicial (ponto de partida)</div>
+                ${ventPlan.map(x=>`<div style="margin:6px 0;">${x}</div>`).join("")}
+              </div>`;
+
+      html += `<div class="modulo" style="margin:10px 0 0 0; border-left-color:var(--verde-escuro); padding:12px;">
+                <div style="font-weight:900; color:var(--verde-escuro); margin-bottom:8px;">Gasometria — interpretação por idade</div>
+                ${abgText}
+              </div>`;
+
+      html += `<div class="modulo" style="margin:10px 0 0 0; border-left-color:var(--amarelo); padding:12px;">
+                <div style="font-weight:900; color:var(--amarelo); margin-bottom:8px;">Cálculos e checagens</div>
+                ${metrics.map(x=>`
+                  <div class="metrica">
+                    <div class="metrica-nome">${x.n}</div>
+                    <div class="metrica-valor">${x.v}</div>
+                  </div>`).join("")}
+              </div>`;
+
+      if(alerts.length){
+        html += `<div class="note" style="margin-top:10px;">
+                  <strong>Alertas:</strong><br/>
+                  ${alerts.map(a=>`• ${a}`).join("<br/>")}
+                </div>`;
+      } else {
+        html += `<div class="note" style="margin-top:10px;">
+                  <strong>Sem alertas automáticos pelos dados inseridos.</strong> Ainda assim: confirmar curva/loop, hemodinâmica, SpO₂, ausculta e capnografia.
+                </div>`;
+      }
+
+      html += `</div>`;
+      return { html, level };
+    }
+
+    function setResult(html, level){
+      const el = $("resultado");
+      el.innerHTML = html;
+      el.className = "resultado " + (level === "ok" ? "ok" : level === "warn" ? "warn" : "danger");
+      el.style.display = "block";
+      setTimeout(()=> el.scrollIntoView({behavior:"smooth", block:"nearest"}), 60);
+    }
+
+    function clearAll(){
+      $("formVM").reset();
+      $("resultado").style.display = "none";
+      $("resultado").innerHTML = "";
+    }
+
+    function buildCopyText(){
+      const el = $("resultado");
+      if(el.style.display === "none" || !el.innerText.trim()){
+        return "Sem resultado gerado ainda.";
+      }
+      return el.innerText
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
+    }
+
+    // Eventos
+    $("btnGerar").addEventListener("click", ()=>{
+      const { html, level } = buildResult();
+      setResult(html, level);
+    });
+
+    $("btnLimpar").addEventListener("click", clearAll);
+
+    $("btnCopiar").addEventListener("click", async ()=>{
+      try{
+        const txt = buildCopyText();
+        await navigator.clipboard.writeText(txt);
+        alert("Resumo copiado para a área de transferência.");
+      } catch(e){
+        alert("Não consegui copiar automaticamente. Selecione o texto do resultado e copie manualmente.");
+      }
+    });
+
+    $("formVM").addEventListener("keypress", (e)=>{
+      if(e.key === "Enter"){
+        e.preventDefault();
+        $("btnGerar").click();
+      }
+    });
+
+    // Inicializa campo de idade
+    // (Note: default select triggers update on load?)
+  </script>
+</body>
+</html>
